@@ -32,12 +32,11 @@ Training code is available and welcome to have a try and learn the training deta
 You can now play with our [Colab](https://colab.research.google.com/drive/1NEm6AsybIiC5TwTU_4DqDkQO0nFRB-uA?usp=sharing) and try it on your photos. 
 
 ## Requirement
-The code is tested on Ubuntu with Nvidia GPUs and CUDA installed. Python>=3.6 is required to run the code.
-
-## Installation
+该代码在安装了 Nvidia GPU 和 CUDA 的 Ubuntu 上进行了测试。需要 Python>=3.6 才能运行代码。
+## 安装教程
 
 Clone the Synchronized-BatchNorm-PyTorch repository for
-
+切到指定目录下，然后clone项目,递归将文件放到当前目录下
 ```
 cd Face_Enhancement/models/networks/
 git clone https://github.com/vacancy/Synchronized-BatchNorm-PyTorch
@@ -52,8 +51,7 @@ cp -rf Synchronized-BatchNorm-PyTorch/sync_batchnorm .
 cd ../../
 ```
 
-Download the landmark detection pretrained model
-
+下载特征点检测预训练模型
 ```
 cd Face_Detection/
 wget http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
@@ -61,8 +59,8 @@ bzip2 -d shape_predictor_68_face_landmarks.dat.bz2
 cd ../
 ```
 
-Download the pretrained model, put the file `Face_Enhancement/checkpoints.zip` under `./Face_Enhancement`, and put the file `Global/checkpoints.zip` under `./Global`. Then unzip them respectively.
-
+下载预训练模型，将文件 'Face_Enhancement/checkpoints.zip' 放在 './Face_Enhancement' 下，
+将文件 'Global/checkpoints.zip' 放在 './Global' 下。然后分别解压缩它们。
 ```
 cd Face_Enhancement/
 wget https://github.com/microsoft/Bringing-Old-Photos-Back-to-Life/releases/download/v1.0/face_checkpoints.zip
@@ -74,8 +72,7 @@ unzip global_checkpoints.zip
 cd ../
 ```
 
-Install dependencies:
-
+安装依赖项：
 ```bash
 pip install -r requirements.txt
 ```
@@ -86,9 +83,9 @@ pip install -r requirements.txt
 
 ### 1) Full Pipeline
 
-You could easily restore the old photos with one simple command after installation and downloading the pretrained model.
+安装并下载预训练模型后，您可以使用一个简单的命令轻松恢复旧照片。
 
-For images without scratches:
+对于没有划痕的图像：
 
 ```
 python run.py --input_folder [test_image_folder_path] \
@@ -96,8 +93,7 @@ python run.py --input_folder [test_image_folder_path] \
               --GPU 0
 ```
 
-For scratched images:
-
+对于有划痕的图像：
 ```
 python run.py --input_folder [test_image_folder_path] \
               --output_folder [output_path] \
@@ -105,7 +101,7 @@ python run.py --input_folder [test_image_folder_path] \
               --with_scratch
 ```
 
-**For high-resolution images with scratches**:
+**对于有划痕的高分辨率图像**:
 
 ```
 python run.py --input_folder [test_image_folder_path] \
@@ -115,12 +111,10 @@ python run.py --input_folder [test_image_folder_path] \
               --HR
 ```
 
-Note: Please try to use the absolute path. The final results will be saved in `./output_path/final_output/`. You could also check the produced results of different steps in `output_path`.
+注意：请尝试使用绝对路径。最终结果将保存在 './output_path/final_output/' 中。您还可以在 'output_path' 中检查不同步骤的生成结果。
+### 2) 划痕检测
 
-### 2) Scratch Detection
-
-Currently we don't plan to release the scratched old photos dataset with labels directly. If you want to get the paired data, you could use our pretrained model to test the collected images to obtain the labels.
-
+目前，我们不打算直接发布带有标签的 scratched old photos 数据集。如果您想获取配对数据，您可以使用我们的预训练模型来测试收集的图像以获取标签。
 ```
 cd Global/
 python detection.py --test_path [test_image_folder_path] \
@@ -132,8 +126,7 @@ python detection.py --test_path [test_image_folder_path] \
 
 ### 3) Global Restoration
 
-A triplet domain translation network is proposed to solve both structured degradation and unstructured degradation of old photos.
-
+提出了一种三重态域翻译网络来解决旧照片的结构化降级和非结构化降级问题。
 <p align="center">
 <img src='imgs/pipeline.PNG' width="50%" height="50%"/>
 </p>
@@ -153,10 +146,9 @@ python test.py --Quality_restore \
 <img src='imgs/global.png'>
 
 
-### 4) Face Enhancement
+### 4) 面部增强
 
-We use a progressive generator to refine the face regions of old photos. More details could be found in our journal submission and `./Face_Enhancement` folder.
-
+我们使用渐进式生成器来优化旧照片的面部区域。更多详细信息可以在我们的期刊提交和 './Face_Enhancement' 文件夹中找到。
 <p align="center">
 <img src='imgs/face_pipeline.jpg' width="60%" height="60%"/>
 </p>
@@ -171,15 +163,14 @@ We use a progressive generator to refine the face regions of old photos. More de
 
 ### 5) GUI
 
-A user-friendly GUI which takes input of image by user and shows result in respective window.
-
+用户友好的 GUI，可按用户输入图像并在相应的窗口中显示结果。
 #### How it works:
 
-1. Run GUI.py file.
-2. Click browse and select your image from test_images/old_w_scratch folder to remove scratches.
-3. Click Modify Photo button.
-4. Wait for a while and see results on GUI window.
-5. Exit window by clicking Exit Window and get your result image in output folder.
+1. 运行 GUI.py 文件.
+2. 单击浏览并从 test_images/old_w_scratch 文件夹中选择您的图像以去除划痕.
+3. 点击 修改照片 按钮。
+4. 稍等片刻，然后在 GUI 窗口上查看结果。
+5. 通过单击退出窗口退出窗口并在输出文件夹中获取结果图像。
 
 <img src='imgs/gui.PNG'>
 
@@ -202,31 +193,26 @@ python train_domain_A.py --use_v2_degradation --continue_train --training_datase
 
 python train_domain_B.py --continue_train --training_dataset domain_B --name domainB_old_photos --label_nc 0 --loadSize 256 --fineSize 256 --dataroot [your_data_folder]  --no_instance --resize_or_crop crop_only --batchSize 120 --no_html --gpu_ids 0,1,2,3 --self_gen --nThreads 4 --n_downsample_global 3 --k_size 4 --use_v2 --mc 64 --start_r 1 --kl 1 --no_cgan --outputs_dir [your_output_folder]  --checkpoints_dir [your_ckpt_folder]
 ```
-Note: For the --name option, please ensure your experiment name contains "domainA" or "domainB", which will be used to select different dataset.
-
+注意：对于 --name 选项，请确保您的实验名称包含“domainA”或“domainB”，这将用于选择不同的数据集。
 ### 3) Train the mapping network between domains
 
-Train the mapping without scratches:
-```
+训练无划痕的映射：```
 python train_mapping.py --use_v2_degradation --training_dataset mapping --use_vae_which_epoch 200 --continue_train --name mapping_quality --label_nc 0 --loadSize 256 --fineSize 256 --dataroot [your_data_folder] --no_instance --resize_or_crop crop_only --batchSize 80 --no_html --gpu_ids 0,1,2,3 --nThreads 8 --load_pretrainA [ckpt_of_domainA_SR_old_photos] --load_pretrainB [ckpt_of_domainB_old_photos] --l2_feat 60 --n_downsample_global 3 --mc 64 --k_size 4 --start_r 1 --mapping_n_block 6 --map_mc 512 --use_l1_feat --niter 150 --niter_decay 100 --outputs_dir [your_output_folder] --checkpoints_dir [your_ckpt_folder]
 ```
 
 
-Traing the mapping with scraches:
-```
+使用 scrache 训练映射：```
 python train_mapping.py --no_TTUR --NL_res --random_hole --use_SN --correlation_renormalize --training_dataset mapping --NL_use_mask --NL_fusion_method combine --non_local Setting_42 --use_v2_degradation --use_vae_which_epoch 200 --continue_train --name mapping_scratch --label_nc 0 --loadSize 256 --fineSize 256 --dataroot [your_data_folder] --no_instance --resize_or_crop crop_only --batchSize 36 --no_html --gpu_ids 0,1,2,3 --nThreads 8 --load_pretrainA [ckpt_of_domainA_SR_old_photos] --load_pretrainB [ckpt_of_domainB_old_photos] --l2_feat 60 --n_downsample_global 3 --mc 64 --k_size 4 --start_r 1 --mapping_n_block 6 --map_mc 512 --use_l1_feat --niter 150 --niter_decay 100 --outputs_dir [your_output_folder] --checkpoints_dir [your_ckpt_folder] --irregular_mask [absolute_path_of_mask_file]
 ```
 
-Traing the mapping with scraches (Multi-Scale Patch Attention for HR input):
-```
+使用 scraches 训练映射（用于 HR 输入的 Multi-Scale Patch Attention）：```
 python train_mapping.py --no_TTUR --NL_res --random_hole --use_SN --correlation_renormalize --training_dataset mapping --NL_use_mask --NL_fusion_method combine --non_local Setting_42 --use_v2_degradation --use_vae_which_epoch 200 --continue_train --name mapping_Patch_Attention --label_nc 0 --loadSize 256 --fineSize 256 --dataroot [your_data_folder] --no_instance --resize_or_crop crop_only --batchSize 36 --no_html --gpu_ids 0,1,2,3 --nThreads 8 --load_pretrainA [ckpt_of_domainA_SR_old_photos] --load_pretrainB [ckpt_of_domainB_old_photos] --l2_feat 60 --n_downsample_global 3 --mc 64 --k_size 4 --start_r 1 --mapping_n_block 6 --map_mc 512 --use_l1_feat --niter 150 --niter_decay 100 --outputs_dir [your_output_folder] --checkpoints_dir [your_ckpt_folder] --irregular_mask [absolute_path_of_mask_file] --mapping_exp 1
 ```
 
 
 ## Citation
 
-If you find our work useful for your research, please consider citing the following papers :)
-
+如果您发现我们的工作对您的研究有用，请考虑引用以下论文:)
 ```bibtex
 @inproceedings{wan2020bringing,
 title={Bringing Old Photos Back to Life},
