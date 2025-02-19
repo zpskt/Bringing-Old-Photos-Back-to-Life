@@ -33,8 +33,13 @@ You can now play with our [Colab](https://colab.research.google.com/drive/1NEm6A
 
 ## Requirement
 该代码在安装了 Nvidia GPU 和 CUDA 的 Ubuntu 上进行了测试。需要 Python>=3.6 才能运行代码。
+需要安装Cmake 官网地址：https://cmake.org/download/
+windows版本：3.7.16
+mac版本（M2）：3.9.21
+ps: 如果你是M芯片，你需要修改很多源码。
 ## 安装教程
 windows安装注意：对于下载包以后得cp和解压操作，一定要确认你的项目目录层级然后再放，不然会显示找不到。
+
 Clone the Synchronized-BatchNorm-PyTorch repository for
 切到指定目录下，然后clone项目,递归将文件放到当前目录下
 ```
@@ -53,7 +58,7 @@ cd ../../
 
 下载特征点检测预训练模型
 ```
-cd Face_Detection/
+%cd Face_Detection/
 wget http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
 bzip2 -d shape_predictor_68_face_landmarks.dat.bz2
 cd ../
@@ -93,7 +98,7 @@ python run.py --input_folder [test_image_folder_path] \
               --GPU 0
 ```
 ```shell
- python run.py --input_folder .\test_images\qiang --output_folder .\output\ --GPU -1
+ python run.py --input_folder ./test_images --output_folder ./output --GPU 0
 ```
 对于有划痕的图像：
 ```
