@@ -34,7 +34,7 @@ You can now play with our [Colab](https://colab.research.google.com/drive/1NEm6A
 ## Requirement
 该代码在安装了 Nvidia GPU 和 CUDA 的 Ubuntu 上进行了测试。需要 Python>=3.6 才能运行代码。
 ## 安装教程
-
+windows安装注意：对于下载包以后得cp和解压操作，一定要确认你的项目目录层级然后再放，不然会显示找不到。
 Clone the Synchronized-BatchNorm-PyTorch repository for
 切到指定目录下，然后clone项目,递归将文件放到当前目录下
 ```
@@ -92,7 +92,9 @@ python run.py --input_folder [test_image_folder_path] \
               --output_folder [output_path] \
               --GPU 0
 ```
-
+```shell
+ python run.py --input_folder .\test_images\qiang --output_folder .\output\ --GPU -1
+```
 对于有划痕的图像：
 ```
 python run.py --input_folder [test_image_folder_path] \
@@ -101,6 +103,9 @@ python run.py --input_folder [test_image_folder_path] \
               --with_scratch
 ```
 
+```shell
+ python run.py --input_folder .\test_images\person2 --output_folder .\output\ --GPU -1 --with_scratch --HR
+```
 **对于有划痕的高分辨率图像**:
 
 ```
