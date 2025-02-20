@@ -309,7 +309,7 @@ def seamless_clone(old_face, new_face, raw_mask):
 
 def get_landmark(face_landmarks, id):
     part = face_landmarks.part(id)
-    x = part.x
+    x = part.img
     y = part.y
 
     return (x, y)

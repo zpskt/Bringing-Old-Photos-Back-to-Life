@@ -13,7 +13,7 @@ import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
 opt = TestOptions().parse()
-
+# 根据选项配置创建数据加载器
 dataloader = data.create_dataloader(opt)
 
 model = Pix2PixModel(opt)
