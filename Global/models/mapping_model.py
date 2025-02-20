@@ -142,14 +142,13 @@ class Pix2PixHDModel_Mapping(BaseModel):
                 param.requires_grad = False
             self.netG_A.eval()
             self.netG_B.eval()
-        if len(opt.gpu_ids) > 0:
-            # when Apple's M chip use mps
-            if opt.gpu_ids[0] == 'mps':
-                self.netG_A.to('mps')
-                self.netG_B.to('mps')
-                self.mapping_net.to('mps')
-            # use cuda or use cpu
-            else:
+        if opt.mps :
+            self.netG_A.to('mps')
+            self.netG_B.to('mps')
+            self.mapping_net.to('mps')
+        else:
+            if len(opt.gpu_ids) > 0:
+                # use cuda or use cpu
                 self.netG_A.cuda(opt.gpu_ids[0])
                 self.netG_B.cuda(opt.gpu_ids[0])
                 self.mapping_net.cuda(opt.gpu_ids[0])
@@ -329,14 +328,19 @@ class Pix2PixHDModel_Mapping(BaseModel):
 
 
     def inference(self, label, inst):
-
-        use_gpu = len(self.opt.gpu_ids) > 0
-        if use_gpu:
-            input_concat = label.data.cuda()
-            inst_data = inst.cuda()
-        else:
+        if self.opt.mps:
+            label = label.to("mps")
+            inst = inst.to("mps")
             input_concat = label.data
             inst_data = inst
+        else:
+            use_gpu = len(self.opt.gpu_ids) > 0
+            if use_gpu:
+                input_concat = label.data.cuda()
+                inst_data = inst.cuda()
+            else:
+                input_concat = label.data
+                inst_data = inst
 
         label_feat = self.netG_A.forward(input_concat, flow="enc")
 

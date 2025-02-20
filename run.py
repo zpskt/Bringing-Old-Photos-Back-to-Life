@@ -24,7 +24,8 @@ if __name__ == "__main__":
         default="./output",
         help="Restored images, please use the absolute path",
     )
-    parser.add_argument("--GPU", type=str, default="6,7", help="0,1,2,mps. If you are using Apple's M chip, please enter mps.")
+    parser.add_argument("--GPU", type=str, default="6,7", help="0,1,2")
+    parser.add_argument("--mps", type=bool, default=False, help="if use M chip, set true")
     parser.add_argument(
         "--checkpoint_name", type=str, default="Setting_9_epoch_100", help="choose which checkpoint"
     )
@@ -61,6 +62,8 @@ if __name__ == "__main__":
             + stage_1_output_dir
             + " --gpu_ids "
             + gpu1
+            + " --mps "
+            + str(opts.mps)
         )
         run_cmd(stage_1_command)
     else:
@@ -77,6 +80,8 @@ if __name__ == "__main__":
             + " --input_size full_size"
             + " --GPU "
             + gpu1
+            + " --mps "
+            + opts.mps
         )
         # 判断是否启用高分辨率模式
         if opts.HR:
@@ -93,6 +98,8 @@ if __name__ == "__main__":
             + stage_1_output_dir
             + " --gpu_ids "
             + gpu1 + HR_suffix
+            + " --mps "
+            + opts.mps
         )
         # 构建完命令以后，分别执行
         run_cmd(stage_1_command_1)

@@ -24,6 +24,9 @@ class BaseOptions:
             "--gpu_ids", type=str, default="0", help="gpu ids: e.g. 0  0,1,2, 0,2. use -1 for CPU"
         )
         self.parser.add_argument(
+            "--mps", type=bool, default=False, help="if use M chip, set true"
+        )
+        self.parser.add_argument(
             "--checkpoints_dir", type=str, default="./checkpoints", help="models are saved here"
         )  ## note: to add this param when using philly
         # self.parser.add_argument('--project_dir', type=str, default='./', help='the project is saved here')  ################### This is necessary for philly
@@ -340,20 +343,21 @@ class BaseOptions:
             self.initialize()
         self.opt = self.parser.parse_args()
         self.opt.isTrain = self.isTrain  # train or test
-
+        mps = self.opt.mps
         str_ids = self.opt.gpu_ids.split(",")
+        print("self.opt.gpu_ids", self.opt.gpu_ids)
         self.opt.gpu_ids = []
         for str_id in str_ids:
             int_id = int(str_id)
             if int_id >= 0:
                 self.opt.gpu_ids.append(int_id)
-
-        # set gpu ids
-        if len(self.opt.gpu_ids) > 0:
-            # pass
-            if self.opt.gpu_ids[0] == "mps":
-                torch.device(self.opt.gpu_ids[0])
-            else:
+        if mps :
+            # use apple m chip
+            torch.device("mps")
+        else:
+            # use gpu or cpu
+            if len(self.opt.gpu_ids) > 0:
+                # pass
                 torch.cuda.set_device(self.opt.gpu_ids[0])
 
         args = vars(self.opt)

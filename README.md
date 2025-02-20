@@ -98,7 +98,7 @@ python run.py --input_folder [test_image_folder_path] \
               --GPU 0
 ```
 ```shell
- python run.py --input_folder ./test_images --output_folder ./output --GPU 0
+ python run.py --input_folder ./test_images/zp/step1 --output_folder ./output --GPU -1 --HR
 ```
 对于有划痕的图像：
 ```
