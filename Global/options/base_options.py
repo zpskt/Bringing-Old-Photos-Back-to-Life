@@ -351,7 +351,10 @@ class BaseOptions:
         # set gpu ids
         if len(self.opt.gpu_ids) > 0:
             # pass
-            torch.cuda.set_device(self.opt.gpu_ids[0])
+            if self.opt.gpu_ids[0] == "mps":
+                torch.device(self.opt.gpu_ids[0])
+            else:
+                torch.cuda.set_device(self.opt.gpu_ids[0])
 
         args = vars(self.opt)
 

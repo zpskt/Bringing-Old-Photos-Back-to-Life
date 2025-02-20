@@ -142,11 +142,17 @@ class Pix2PixHDModel_Mapping(BaseModel):
                 param.requires_grad = False
             self.netG_A.eval()
             self.netG_B.eval()
-
-        if opt.gpu_ids:
-            self.netG_A.cuda(opt.gpu_ids[0])
-            self.netG_B.cuda(opt.gpu_ids[0])
-            self.mapping_net.cuda(opt.gpu_ids[0])
+        if len(opt.gpu_ids) > 0:
+            # when Apple's M chip use mps
+            if opt.gpu_ids[0] == 'mps':
+                self.netG_A.to('mps')
+                self.netG_B.to('mps')
+                self.mapping_net.to('mps')
+            # use cuda or use cpu
+            else:
+                self.netG_A.cuda(opt.gpu_ids[0])
+                self.netG_B.cuda(opt.gpu_ids[0])
+                self.mapping_net.cuda(opt.gpu_ids[0])
         
         if not self.isTrain:
             self.load_network(self.mapping_net, "mapping_net", opt.which_epoch)
