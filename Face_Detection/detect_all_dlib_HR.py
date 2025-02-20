@@ -41,7 +41,7 @@ def _origin_face_pts():
 
 def get_landmark(face_landmarks, id):
     part = face_landmarks.part(id)
-    x = part.img
+    x = part.x
     y = part.y
 
     return (x, y)

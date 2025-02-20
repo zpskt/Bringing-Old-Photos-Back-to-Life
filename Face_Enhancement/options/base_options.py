@@ -28,6 +28,9 @@ class BaseOptions:
             "--gpu_ids", type=str, default="0", help="gpu ids: e.g. 0  0,1,2, 0,2. use -1 for CPU"
         )
         parser.add_argument(
+            "--mps", type=bool, default=False, help="if use M chip, set true"
+        )
+        parser.add_argument(
             "--checkpoints_dir", type=str, default="./checkpoints", help="models are saved here"
         )
         parser.add_argument("--model", type=str, default="pix2pix", help="which model to use")
@@ -280,19 +283,16 @@ class BaseOptions:
             int_id = int(str_id)
             if int_id >= 0:
                 opt.gpu_ids.append(int_id)
-
-        if len(opt.gpu_ids) > 0:
-            if opt.gpu_ids[0] == 'mps':
-                print("Apple's M chip use mps")
-                torch.device(opt.gpu_ids[0])
-            else:
+        if opt.mps:
+            torch.device("mps")
+        else:
+            if len(opt.gpu_ids) > 0:
                 print("The main GPU is ")
                 print(opt.gpu_ids[0])
                 torch.cuda.set_device(opt.gpu_ids[0])
-
-        assert (
-            len(opt.gpu_ids) == 0 or opt.batchSize % len(opt.gpu_ids) == 0
-        ), "Batch size %d is wrong. It must be a multiple of # GPUs %d." % (opt.batchSize, len(opt.gpu_ids))
+            assert (
+                len(opt.gpu_ids) == 0 or opt.batchSize % len(opt.gpu_ids) == 0
+            ), "Batch size %d is wrong. It must be a multiple of # GPUs %d." % (opt.batchSize, len(opt.gpu_ids))
 
         self.opt = opt
         return self.opt

@@ -81,7 +81,7 @@ if __name__ == "__main__":
             + " --GPU "
             + gpu1
             + " --mps "
-            + opts.mps
+            + str(opts.mps)
         )
         # 判断是否启用高分辨率模式
         if opts.HR:
@@ -99,7 +99,7 @@ if __name__ == "__main__":
             + " --gpu_ids "
             + gpu1 + HR_suffix
             + " --mps "
-            + opts.mps
+            + str(opts.mps)
         )
         # 构建完命令以后，分别执行
         run_cmd(stage_1_command_1)
@@ -158,6 +158,8 @@ if __name__ == "__main__":
             + opts.checkpoint_name
             + " --gpu_ids "
             + gpu1
+            + " --mps "
+            + str(opts.mps)
             + " --load_size 512 --label_nc 18 --no_instance --preprocess_mode resize --batchSize 1 --results_dir "
             + stage_3_output_dir
             + " --no_parsing_map"
@@ -172,6 +174,8 @@ if __name__ == "__main__":
             + opts.checkpoint_name
             + " --gpu_ids "
             + gpu1
+            + " --mps "
+            + str(opts.mps)
             + " --load_size 256 --label_nc 18 --no_instance --preprocess_mode resize --batchSize 4 --results_dir "
             + stage_3_output_dir
             + " --no_parsing_map"
