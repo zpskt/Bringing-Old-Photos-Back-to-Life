@@ -41,7 +41,7 @@ def _origin_face_pts():
 
 def get_landmark(face_landmarks, id):
     part = face_landmarks.part(id)
-    x = part.img
+    x = part.x
     y = part.y
 
     return (x, y)
@@ -161,10 +161,10 @@ if __name__ == "__main__":
         done = time.time()
 
         if len(faces) == 0:
-            print("Warning: There is no face in %s" % (x))
+            print("警告: 没有检测到人脸 %s" % (x))
             continue
 
-        print(len(faces))
+        print("检测到 %s 个人脸" % len(faces))
 
         if len(faces) > 0:
             for face_id in range(len(faces)):
