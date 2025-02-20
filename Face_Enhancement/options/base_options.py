@@ -282,9 +282,13 @@ class BaseOptions:
                 opt.gpu_ids.append(int_id)
 
         if len(opt.gpu_ids) > 0:
-            print("The main GPU is ")
-            print(opt.gpu_ids[0])
-            torch.cuda.set_device(opt.gpu_ids[0])
+            if opt.gpu_ids[0] == 'mps':
+                print("Apple's M chip use mps")
+                torch.device(opt.gpu_ids[0])
+            else:
+                print("The main GPU is ")
+                print(opt.gpu_ids[0])
+                torch.cuda.set_device(opt.gpu_ids[0])
 
         assert (
             len(opt.gpu_ids) == 0 or opt.batchSize % len(opt.gpu_ids) == 0
