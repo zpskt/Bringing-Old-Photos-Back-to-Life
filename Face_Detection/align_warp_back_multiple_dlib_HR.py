@@ -239,7 +239,8 @@ def blur_blending_cv2(im1, im2, mask):
 def Poisson_blending(im1, im2, mask):
 
     # mask=1-mask
-    mask *= 255
+    mask = mask * 255.0
+
     kernel = np.ones((10, 10), np.uint8)
     mask = cv2.erode(mask, kernel, iterations=1)
     mask /= 255
@@ -308,7 +309,10 @@ def seamless_clone(old_face, new_face, raw_mask):
 
 def get_landmark(face_landmarks, id):
     part = face_landmarks.part(id)
-    x = part.x
+    if hasattr(part, 'img'):
+        x = part.img
+    else:
+        x = part.x
     y = part.y
 
     return (x, y)
