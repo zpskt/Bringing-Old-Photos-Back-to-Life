@@ -143,11 +143,13 @@ def main(config):
         scratch_image = torch.unsqueeze(scratch_image, 0)
         _, _, ow, oh = scratch_image.shape
         scratch_image_scale = scale_tensor(scratch_image)
-
-        if config.GPU >= 0:
-            scratch_image_scale = scratch_image_scale.to(config.GPU)
+        if config.mps:
+            scratch_image_scale = scratch_image_scale.to("mps")
         else:
-            scratch_image_scale = scratch_image_scale.cpu()
+            if config.GPU >= 0:
+                scratch_image_scale = scratch_image_scale.to(config.GPU)
+            else:
+                scratch_image_scale = scratch_image_scale.cpu()
         with torch.no_grad():
             P = torch.sigmoid(model(scratch_image_scale))
 
