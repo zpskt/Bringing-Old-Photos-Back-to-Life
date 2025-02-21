@@ -240,7 +240,8 @@ def blur_blending_cv2(im1, im2, mask):
 def Poisson_blending(im1, im2, mask):
 
     # mask=1-mask
-    mask *= 255
+    mask = mask * 255.0
+
     kernel = np.ones((10, 10), np.uint8)
     mask = cv2.erode(mask, kernel, iterations=1)
     mask /= 255

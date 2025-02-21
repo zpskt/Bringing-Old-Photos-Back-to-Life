@@ -15,9 +15,8 @@ class Pix2PixModel(torch.nn.Module):
     def __init__(self, opt):
         super().__init__()
         self.opt = opt
-        self.FloatTensor = torch.cuda.FloatTensor if self.use_gpu() else self.use_cpu()
-        self.ByteTensor = torch.cuda.ByteTensor if self.use_gpu() else self.use_cpu()
-
+        self.FloatTensor = torch.cuda.FloatTensor if self.use_gpu() else torch.FloatTensor
+        self.ByteTensor = torch.cuda.ByteTensor if self.use_gpu() else torch.ByteTensor
         self.netG, self.netD, self.netE = self.initialize_networks(opt)
 
         # set loss functions

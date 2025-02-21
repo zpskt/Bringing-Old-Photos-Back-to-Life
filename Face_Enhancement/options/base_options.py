@@ -4,6 +4,8 @@
 import sys
 import argparse
 import os
+
+from numpy.lib._iotools import str2bool
 from util import util
 import torch
 import models
@@ -28,7 +30,7 @@ class BaseOptions:
             "--gpu_ids", type=str, default="0", help="gpu ids: e.g. 0  0,1,2, 0,2. use -1 for CPU"
         )
         parser.add_argument(
-            "--mps", type=bool, default=False, help="if use M chip, set true"
+            "--mps", type=str2bool, default=False, help="if use M chip, set true"
         )
         parser.add_argument(
             "--checkpoints_dir", type=str, default="./checkpoints", help="models are saved here"
@@ -283,6 +285,7 @@ class BaseOptions:
             int_id = int(str_id)
             if int_id >= 0:
                 opt.gpu_ids.append(int_id)
+
         if opt.mps:
             torch.device("mps")
         else:

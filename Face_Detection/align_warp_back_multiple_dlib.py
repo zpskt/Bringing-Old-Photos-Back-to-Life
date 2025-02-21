@@ -141,8 +141,8 @@ def match_histograms(src_image, ref_image):
 '''
 def _standard_face_pts():
     pts = (
-        np.array([196.0, 226.0, 316.0, 226.0, 256.0, 286.0, 220.0, 360.4, 292.0, 360.4], np.float32) / 256.0
-        - 1.0
+            np.array([196.0, 226.0, 316.0, 226.0, 256.0, 286.0, 220.0, 360.4, 292.0, 360.4], np.float32) / 256.0
+            - 1.0
     )
 
     return np.reshape(pts, (5, 2))
@@ -191,7 +191,6 @@ def compute_transformation_matrix(img, landmark, normalize, target_face_scale=1.
 使用相似变换估计从输入特征点到目标特征点的变换矩阵。
 '''
 def compute_inverse_transformation_matrix(img, landmark, normalize, target_face_scale=1.0):
-
     std_pts = _standard_face_pts()  # [-1,1]
     target_pts = (std_pts * target_face_scale + 1) / 2 * 256.0
 
@@ -253,7 +252,6 @@ def affine2theta(affine, input_w, input_h, target_w, target_h):
 使用原始掩码和模糊后的掩码分别进行图像合成，最终返回融合后的图像。
 '''
 def blur_blending(im1, im2, mask):
-
     mask *= 255.0
 
     kernel = np.ones((10, 10), np.uint8)
@@ -298,7 +296,6 @@ def blur_blending_cv2(im1, im2, mask):
     return im
 
 def Poisson_blending(im1, im2, mask):
-
     # mask=1-mask
     mask *= 255
     kernel = np.ones((10, 10), np.uint8)
@@ -318,7 +315,6 @@ def Poisson_blending(im1, im2, mask):
 
 
 def Poisson_B(im1, im2, mask, center):
-
     mask *= 255
 
     result = cv2.seamlessClone(
@@ -405,7 +401,6 @@ def get_landmark(face_landmarks, id):
 
 
 def search(face_landmarks):
-
     x1, y1 = get_landmark(face_landmarks, 36)
     x2, y2 = get_landmark(face_landmarks, 39)
     x3, y3 = get_landmark(face_landmarks, 42)
@@ -557,4 +552,3 @@ if __name__ == "__main__":
             # 每处理1000张图像，打印一次进度信息
             if count % 1000 == 0:
                 print("%d 已完成 ..." % (count))
-

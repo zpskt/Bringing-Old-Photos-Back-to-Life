@@ -7,6 +7,9 @@ import shutil
 import sys
 from subprocess import call
 
+from numpy.lib._iotools import str2bool
+
+
 def run_cmd(command):
     try:
         call(command, shell=True)
@@ -25,7 +28,7 @@ if __name__ == "__main__":
         help="Restored images, please use the absolute path",
     )
     parser.add_argument("--GPU", type=str, default="6,7", help="0,1,2")
-    parser.add_argument("--mps", type=bool, default=False, help="if use M chip, set true")
+    parser.add_argument("--mps", type=str2bool, default=False, help="if use mps acceleration, set true")
     parser.add_argument(
         "--checkpoint_name", type=str, default="Setting_9_epoch_100", help="choose which checkpoint"
     )

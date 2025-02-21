@@ -32,6 +32,13 @@ Training code is available and welcome to have a try and learn the training deta
 You can now play with our [Colab](https://colab.research.google.com/drive/1NEm6AsybIiC5TwTU_4DqDkQO0nFRB-uA?usp=sharing) and try it on your photos. 
 
 ## Requirement
+The code is tested on Ubuntu with Nvidia GPUs and CUDA installed. Python>=3.6 is required to run the code.
+
+### APPLE M CHIP
+The code is tested on macOS with M2-chip and Python =3.9.21(Because of python has supported M-chips since version 3.9).  
+If you are using mps acceleration, set the parameter mps to true
+
+## Installation
 该代码在安装了 Nvidia GPU 和 CUDA 的 Ubuntu 上进行了测试。需要 Python>=3.6 才能运行代码。
 需要安装Cmake 官网地址：https://cmake.org/download/
 windows版本：3.7.16
@@ -85,6 +92,7 @@ pip install -r requirements.txt
 ## :rocket: How to use?
 
 **Note**: GPU can be set 0 or 0,1,2 or 0,2; use -1 for CPU
+**Note**: mps can be set True or False
 
 ### 1) Full Pipeline
 
