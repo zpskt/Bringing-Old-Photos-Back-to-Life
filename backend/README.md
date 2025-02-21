@@ -105,4 +105,14 @@ D:.
             wsgi.cpython-37.pyc
             __init__.cpython-37.pyc
 ```
-### 构建视图
+### 新建数据库
+安装python中的mysqlclient库
+```shell
+conda install mysqlclient
+```
+系统以及数据库相关文件都在 settings.py文件中
+
+执行命令新建表格
+```shell
+python manage.py migrate
+```
