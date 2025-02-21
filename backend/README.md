@@ -1,8 +1,7 @@
 # 配置后端Django服务
 
 参考链接: 
-1. https://www.djangoproject.com/ 
-2. https://docs.djangoproject.com/zh-hans/5.1/
+1. https://docs.djangoproject.com/zh-hans/4.2/
 ## 环境
 python 3.9.x
 Django 4.2

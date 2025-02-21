@@ -106,7 +106,7 @@ python run.py --input_folder [test_image_folder_path] \
               --GPU 0
 ```
 ```shell
- python run.py --input_folder ./test_images/zp/step1 --output_folder ./output --GPU -1 --HR
+ python run.py --input_folder .\test_images\qiang --output_folder .\output --GPU -1 
 ```
 对于有划痕的图像：
 ```
@@ -117,7 +117,7 @@ python run.py --input_folder [test_image_folder_path] \
 ```
 
 ```shell
- python run.py --input_folder .\test_images\person --output_folder .\output\ --GPU -1 --with_scratch --HR
+ python run.py --input_folder .\test_images\qiang --output_folder .\output --GPU -1 --with_scratch 
 ```
 **对于有划痕的高分辨率图像**:
 

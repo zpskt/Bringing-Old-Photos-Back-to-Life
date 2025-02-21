@@ -13,6 +13,7 @@ import torch
 import torch.nn.functional as F
 import torchvision as tv
 from PIL import Image, ImageFile
+from numpy.lib._iotools import str2bool
 
 from detection_models import networks
 from detection_util.util import *
@@ -105,13 +106,16 @@ def main(config):
     checkpoint = torch.load(checkpoint_path, map_location="cpu")
     model.load_state_dict(checkpoint["model_state"])
     print("模型参数加载完成")
-
-    if config.GPU >= 0:
-        print("加载到GPU")
-        model.to(config.GPU)
+    if config.mps:
+        model.to("mps")
+        print("加载到MPS")
     else:
-        print("加载到CPU")
-        model.cpu()
+        if config.GPU >= 0:
+            print("加载到GPU")
+            model.to(config.GPU)
+        else:
+            print("加载到CPU")
+            model.cpu()
     print("设置模型为模型评估模式")
     model.eval()
 
@@ -205,6 +209,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     # parser.add_argument('--checkpoint_name', type=str, default="FT_Epoch_latest.pt", help='Checkpoint Name')
     parser.add_argument("--GPU", type=int, default=0)
+    parser.add_argument("--mps", type=str2bool, default=False, help="if use mps acceleration, set true")
     parser.add_argument("--test_path", type=str, default=".")
     parser.add_argument("--output_dir", type=str, default=".")
     parser.add_argument("--input_size", type=str, default="scale_256", help="resize_256|full_size|scale_256")
