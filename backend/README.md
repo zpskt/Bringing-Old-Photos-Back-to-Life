@@ -106,9 +106,76 @@ D:.
             __init__.cpython-37.pyc
 ```
 ### 新建数据库
+#### 服务器安装mysql
+实验环境为centos7
+官方地址： https://dev.mysql.com/doc/refman/8.0/en/linux-installation.html
+我这里安装的5.7版本 
+```shell
+yum repolist all | grep mysql
+sudo yum install mysql-community-server
+```
+如果显示GPG错误，找到[mysql5.7-community] 修改：gpgcheck参数为0，即不校验gpg
+```shell
+vi /etc/yum.repos.d/mysql-community.repo
+```
+安装完成后，启动mysql服务
+```shell
+sudo systemctl start mysqld
+sudo systemctl enable mysqld
+```
+获取临时密码
+```shell
+sudo grep 'temporary password' /var/log/mysqld.log
+```
+拿着你的临时密码就可以进行初始化设置了
+3,<Ld?!D_SsZ
+配置mysql
+```shell
+sudo mysql_secure_installation
+```
+设置mysql端口号
+```shell
+sudo vi /etc/my.cnf
+```
+[mysqld]
+port = 3306
+设置防火墙允许访问
+```shell
+sudo iptables -L -n
+sudo iptables -A INPUT -p tcp --dport 3306 -j ACCEPT
+sudo netstat -tuln | grep 3306
+```
+在服务器本身设置root账户可以远程访问
+```shell
+mysql -u root -p
+```
+```mysql
+use mysql;
+select host from user where user='root';
+update user set host = '%' where user ='root';
+flush privileges;
+select host from user where user='root';
+```
+
+```shell
+sudo systemctl restart mysqld
+```
+好了，现在很尴尬，Django支持json，但是mysql5.7不支持json，所以需要安装mysql8.0
+由于mysql8.0
+所以需要进行单独的属性配置IDE或者是链接参数加上 allowPublicKeyRetrieval
+allowPublicKeyRetrieval=true
+
+
+
+#### 
 安装python中的mysqlclient库
 ```shell
 conda install mysqlclient
+```
+如果是比较老版本的python
+那么还需要再安装一个
+```shell
+pip install MySQL-python
 ```
 系统以及数据库相关文件都在 settings.py文件中
 
