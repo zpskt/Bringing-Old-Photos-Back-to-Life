@@ -105,7 +105,7 @@ D:.
             wsgi.cpython-37.pyc
             __init__.cpython-37.pyc
 ```
-### 新建数据库
+###  新建数据库
 #### 服务器安装mysql
 实验环境为centos7
 官方地址： https://dev.mysql.com/doc/refman/8.0/en/linux-installation.html
@@ -167,7 +167,7 @@ allowPublicKeyRetrieval=true
 
 
 
-#### 
+#### 安装依赖
 安装python中的mysqlclient库
 ```shell
 conda install mysqlclient
@@ -183,3 +183,37 @@ pip install MySQL-python
 ```shell
 python manage.py migrate
 ```
+
+### 常用的命令
+1. python manage.py runserver 启动服务
+2. python manage.py startapp polls 创建应用
+3. python manage.py migrate 新建数据库
+4. python manage.py makemigrations polls 生成迁移文件
+5. python manage.py sqlmigrate polls 0001 查看迁移文件
+6. python manage.py check 检查项目的问题
+7. python manage.py shell 进入python shell
+8. python manage.py test polls 测试应用
+9. python manage.py createsuperuser 创建超级用户
+10. python manage.py dbshell 进入数据库
+11. python manage.py flush 清空数据库
+12. python manage.py inspectdb > polls/models.py 从数据库中生成模型
+13. python manage.py sqlall polls 生成创建所有应用的SQL语句
+14. python manage.py validate 验证项目的完整性
+15. python manage.py showmigrations polls 显示应用的迁移历史
+16. python manage.py migrate polls 0001 应用迁移
+17. python manage.py migrate polls 0001-0002 应用迁移
+18. python manage.py migrate polls --fake 应用迁移
+19. python manage.py migrate polls --fake-initial 应用迁移
+20. python manage.py migrate polls --unapply 应用迁移
+21. python manage.py migrate polls --list 应用迁移
+22. python manage.py migrate polls --plan 应用迁移
+23. python manage.py migrate polls --database=otherdb 应用迁移
+24. python manage.py migrate polls --database=otherdb --fake 应用迁移
+
+### 开发流程
+1. 创建应用
+2. 建立路由关系
+3. settings.py中配置路由关系
+4. 编辑 models.py 文件，改变模型
+5. 运行 python manage.py makemigrations 为模型的改变生成迁移文件。 
+6. 运行 python manage.py migrate 来应用数据库迁移。

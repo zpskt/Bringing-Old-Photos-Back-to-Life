@@ -35,6 +35,7 @@ INSTALLED_APPS = [  # Django 的自带应用
     'django.contrib.sessions',  # 会话框架
     'django.contrib.messages',  # 消息框架
     'django.contrib.staticfiles',  # 管理静态文件的框架
+    "polls.apps.PollsConfig", # 创建的应用，对应 polls/apps.py
 ]
 
 MIDDLEWARE = [
@@ -73,11 +74,11 @@ WSGI_APPLICATION = 'repaired_old_photo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # 指定数据库引擎mysql
-        "NAME": "mydatabase",
-        "USER": "mydatabaseuser",
-        "PASSWORD": "mypassword",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
+        "NAME": "repair_photo",
+        "USER": "root",
+        "PASSWORD": "zhangpeng1211zP!",
+        "HOST": "8.146.205.137",
+        "PORT": "3306",
     }
 }
 
